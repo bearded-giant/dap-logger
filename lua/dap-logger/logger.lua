@@ -2,7 +2,7 @@ local M = {}
 
 -- Configuration options
 M.config = {
-  auto_logging_enabled = true,
+  auto_logging_enabled = false,  -- Disabled by default for performance reasons
   current_log_file = nil,
   log_dir = vim.fn.expand("~/dap_logs"),
   max_depth = 3,
