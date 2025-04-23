@@ -1,0 +1,106 @@
+*dap-logger.txt*          Neovim           *dap-logger*
+
+==============================================================================
+CONTENTS                                                   *dap-logger-contents*
+
+  1. Introduction ............................ |dap-logger-introduction|
+  2. Requirements ............................ |dap-logger-requirements|
+  3. Setup ................................... |dap-logger-setup|
+  4. Configuration ........................... |dap-logger-configuration|
+  5. Commands ................................ |dap-logger-commands|
+  6. Log format .............................. |dap-logger-log-format|
+
+==============================================================================
+1. INTRODUCTION                                       *dap-logger-introduction*
+
+A plugin for Neovim that logs variables from Debug Adapter Protocol (DAP) 
+debugging sessions to a file. It provides detailed variable logging at each 
+breakpoint with configurable depth and scope.
+
+==============================================================================
+2. REQUIREMENTS                                       *dap-logger-requirements*
+
+- Neovim 0.7.0+
+- nvim-dap: https://github.com/mfussenegger/nvim-dap
+
+==============================================================================
+3. SETUP                                                   *dap-logger-setup*
+
+The plugin must be initialized using the setup function:
+>
+    require("dap-logger").setup({
+      -- Optional configuration options
+    })
+<
+
+==============================================================================
+4. CONFIGURATION                                   *dap-logger-configuration*
+
+The following options are available when calling setup():
+
+                                                *dap-logger-config-log_dir*
+log_dir                  (string) Directory where log files will be stored
+                        Default: ~/dap_logs
+
+                                                *dap-logger-config-max_depth*
+max_depth                (number) Maximum depth for table expansion
+                        Default: 3
+
+                                   *dap-logger-config-auto_logging_enabled*
+auto_logging_enabled     (boolean) Whether logging is enabled by default
+                        Default: true
+
+                                           *dap-logger-config-log_scope*
+log_scope                (string) Variables to log: "all", "local", "global"
+                        Default: "all"
+
+==============================================================================
+5. COMMANDS                                             *dap-logger-commands*
+
+                                                           *:DapLogVars*
+:DapLogVars              Manually trigger variable logging at current position
+
+                                                          *:DapLogEnable*
+:DapLogEnable            Enable automatic variable logging
+
+                                                         *:DapLogDisable*
+:DapLogDisable           Disable automatic variable logging
+
+                                                             *:DapLogAll*
+:DapLogAll               Log both local and global variables
+
+                                                           *:DapLogLocal*
+:DapLogLocal             Log only local variables
+
+                                                          *:DapLogGlobal*
+:DapLogGlobal            Log only global variables
+
+                                                        *:DapLogVerbose*
+:DapLogVerbose {name}    Add a variable to verbose logging (maximum depth)
+                        {name} is the variable name to log verbosely
+
+                                                      *:DapLogUnverbose*
+:DapLogUnverbose [{name}] Remove a variable from verbose logging
+                        {name} is the variable name to remove
+                        If no name is provided, lists all verbose variables
+
+                                                          *:DapLogDepth*
+:DapLogDepth {number}    Set the default depth for variable expansion
+                        {number} must be a positive integer
+
+==============================================================================
+6. LOG FORMAT                                         *dap-logger-log-format*
+
+Log files are created in the configured log_dir with names in the format:
+  dap_vars_YYYYMMDD-HHMMSS.log
+
+Each breakpoint is marked clearly with file path, line number and timestamp:
+>
+  ---- BREAK @ /path/to/file.py:42 (HH:MM:SS) ----
+<
+
+Variables are logged after each breakpoint marker in a readable format,
+with scope headers to separate local and global variables.
+
+==============================================================================
+ vim:tw=78:ts=8:ft=help:norl:
