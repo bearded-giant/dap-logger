@@ -1,6 +1,7 @@
 # dap-logger
 
 A Neovim plugin for logging Debug Adapter Protocol (DAP) variables to a file during debugging sessions.
+Writes to JSON files with clear markers for breakpoints, making it easy to track variable states.
 
 ## Features
 
@@ -22,7 +23,7 @@ Using [lazy.nvim](https://github.com/folke/lazy.nvim):
 
 ```lua
 {
-  "your-username/dap-logger",
+  "bearded-giant/dap-logger",
   dependencies = {
     "mfussenegger/nvim-dap",
   },
@@ -36,31 +37,19 @@ Using [lazy.nvim](https://github.com/folke/lazy.nvim):
 }
 ```
 
-Using [packer.nvim](https://github.com/wbthomason/packer.nvim):
-
-```lua
-use {
-  "your-username/dap-logger",
-  requires = {"mfussenegger/nvim-dap"},
-  config = function()
-    require("dap-logger").setup()
-  end
-}
-```
-
 ## Configuration
 
 ```lua
 require("dap-logger").setup({
   -- Directory where log files will be stored
   log_dir = vim.fn.expand("~/dap_logs"),
-  
+
   -- Maximum depth for table expansion (default: 3)
   max_depth = 3,
-  
+
   -- Whether to enable logging by default
   auto_logging_enabled = true,
-  
+
   -- What variables to log ("all", "local", or "global")
   log_scope = "all",
 })
